@@ -4,47 +4,47 @@ class MembersController < ApplicationController
     skip_before_action :authorized, only: %i[create show]
 
     def create
-        @member = Member.create(member_params)
-        token = issue_token(@member, "member") # Make sure to use @member instead of member
-    
-        if @member.save
-          member_info = JSON.parse(
-            @member.to_json(only: [:id, :name, :email])
-            # ,include: [:appointments, :practitioner_profiles, :department]
-          )
-    
-          render json: { member: member_info, jwt: token }, status: :created
-        else 
-          render json: { errors: @member.errors.full_messages },
-                 status: :unprocessable_entity
-        end
-      end
+        @member = Member.create!(member_params)
+        token = issue_token(@member, "member")
 
-    def show
-        member = Member.find(params[:id])
-        token = issue_token(practitioner, "member")
-
+        role = params[:church_id] || 1
         member_info = JSON.parse(
-            member.to_json only: [:id, :username, :email]
-            # include: [:appointments, :practitioner_profiles, :department]
+            @member.to_json only: [:id, :username, :email]
         )
 
-        render json: {practitioner: member_info, jwt: token }, status: :created
+        render json: {member: member_info, jwt: token }, status: :created
     end
 
-    def index
-        render json: Member.all, status: :ok
+    def show
+        @member = Member.find(params[:id])
+        token = issue_token(@member, "member")
+
+        member_info = JSON.parse(
+            @member.to_json only: [:id, :username, :email]
+        )
+
+        render json: {admin: member_info, jwt: token }, status: :created
+    end
+
+    def update
+        @member = Member.find(params[:id])
+        @member.update(member_params)
+        render json: @member, status: :ok
     end
 
     def destroy
-        member = Member.find(params[:id])
-        member.destroy
+        @member = Member.find(params[:id])
+        @member.destroy
         head :no_content
     end
 
     private
+    def authorize
+        User.find(session[:user_id])
+    end
+
     def member_params
-        params.permit(:name, :password, :email, :church_id)
+        params.permit(:username, :email,:church_id,:password,:password_confirmation)
     end
 
     def record_invalid(invalid)
@@ -53,5 +53,5 @@ class MembersController < ApplicationController
 
     def record_not_found(not_found)
         render json: not_found, status: 404
-    end  
+    end   
 end

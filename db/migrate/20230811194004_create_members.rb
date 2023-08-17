@@ -5,8 +5,10 @@ class CreateMembers < ActiveRecord::Migration[7.0]
       t.string :username
       t.integer :church_id
       t.string :password_digest
+      t.string :password_confirmation
 
       t.timestamps
     end
   end
 end
+  

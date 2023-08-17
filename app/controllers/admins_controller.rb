@@ -4,28 +4,15 @@ class AdminsController < ApplicationController
     skip_before_action :authorized, only: %i[create show]
 
     def create
-        @admin = Admin.new(admin_params)
-        token = issue_token(@admin, "admin")
-        if @admin.save
-          admin_info = JSON.parse(
-            @admin.to_json(only: [:id, :username, :email])
-          )
-          render json: { admin: admin_info, jwt: token }, status: :created
-        else
-          render json: { errors: @admin.errors.full_messages }, status: :unprocessable_entity
-        end
-      end
-      
-    # def create
-    #     @admin = Admin.new(admin_params)
-    #     token = issue_token(@admin, "admin")
-    #     @adm = @admin.save
-    #     admin_info = JSON.parse(
-    #         @adm.to_json only: [:id, :username, :email]
-    #     )
+        admin = Admin.create!(admin_params)
+        token = issue_token(admin, "admin")
 
-    #     render json: {admin: admin_info, jwt: token }, status: :created
-    # end
+        admin_info = JSON.parse(
+            admin.to_json only: [:id, :username, :email]
+        )
+
+        render json: {admin: admin_info, jwt: token }, status: :created
+    end
 
     def show
         admin = Admin.find(params[:id])
@@ -52,11 +39,11 @@ class AdminsController < ApplicationController
 
     private
     def authorize
-        Admin.find(session[:user_id])
+        User.find(session[:user_id])
     end
 
     def admin_params
-        params.permit(:username, :email, :password, :church_id)
+        params.permit(:username, :email,:church_id,:password)
     end
 
     def record_invalid(invalid)

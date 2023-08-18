@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_08_11_194023) do
+ActiveRecord::Schema[7.0].define(version: 2023_08_12_195311) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -19,6 +19,17 @@ ActiveRecord::Schema[7.0].define(version: 2023_08_11_194023) do
     t.string "username"
     t.integer "church_id"
     t.string "password_digest"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "appointments", force: :cascade do |t|
+    t.string "first_name"
+    t.string "second_name"
+    t.string "email"
+    t.integer "phone_number"
+    t.boolean "reschedule"
+    t.string "title"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
@@ -33,8 +44,26 @@ ActiveRecord::Schema[7.0].define(version: 2023_08_11_194023) do
   create_table "members", force: :cascade do |t|
     t.string "email"
     t.string "username"
-    t.integer "church_id"
+    # t.integer "church_id"
     t.string "password_digest"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "prayers", force: :cascade do |t|
+    t.string "username"
+    t.string "email"
+    t.string "title"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "sermons", force: :cascade do |t|
+    t.string "title"
+    t.string "description"
+    t.string "video"
+    t.boolean "downloaded"
+    t.integer "admin_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end

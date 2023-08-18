@@ -1,5 +1,7 @@
 class AppointmentsController < ApplicationController
     before_action :set_appointment, only: %i[create show]
+    skip_before_action :authorized, only: %i[index]
+
     def index
         @appointments = Appointment.all
         render json: @appointments,status: :ok

@@ -4,16 +4,18 @@ class MembersController < ApplicationController
     skip_before_action :authorized, only: %i[create show]
 
     def create
+        # Default church_id to 1 if not provided
+        # params[:church_id] ||= 1
+      
         @member = Member.create!(member_params)
         token = issue_token(@member, "member")
-
-        role = params[:church_id] || 1
+      
         member_info = JSON.parse(
             @member.to_json only: [:id, :username, :email]
         )
-
-        render json: {member: member_info, jwt: token }, status: :created
-    end
+      
+        render json: { member: member_info, jwt: token }, status: :created
+      end
 
     def show
         @member = Member.find(params[:id])
@@ -44,7 +46,7 @@ class MembersController < ApplicationController
     end
 
     def member_params
-        params.permit(:username, :email,:church_id,:password,:password_confirmation)
+        params.permit(:username, :email,:password)
     end
 
     def record_invalid(invalid)

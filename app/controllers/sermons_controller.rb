@@ -1,4 +1,5 @@
 class SermonsController < ApplicationController
+  skip_before_action :authorized, only: %i[show]
 
     def index
         @sermon = Sermon.all

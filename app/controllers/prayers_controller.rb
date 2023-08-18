@@ -1,4 +1,6 @@
 class PrayersController < ApplicationController
+    skip_before_action :authorized, only: %i[index]
+
     def index
         @prayers = Prayer.all
         render json: @prayers,status: :ok

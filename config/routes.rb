@@ -1,20 +1,20 @@
 Rails.application.routes.draw do
-  resources :sermons
+  # resources :sermons
   resources :appointments
   resources :prayers
-  resources :admins
-  resources :members
+  # resources :admins
+  # resources :members
   resources :churches
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
   # post "/signup", to: "users#create"
   # post "/login", to: "sessions#create"
   # delete "/logout", to: "sessions#destroy"
   # get "/me", to: "users#show"
-  resources :videos, only: [ :new, :create] do
-    get 'download', on: :member
+  resources :sermons, only: [ :new, :create,:index] do
+    get 'download', on: :member # GET /videos GET /videos/:id/download GET /videos/new POST /videos 
   end
-  root 'videos#index'
-  get '/videos/all', to: 'videos#index'
+  # root 'videos#index'
+  # get '/videos/all', to: 'videos#index'
 
   post "/member/signup", to: "members#create"
   post "/member/login", to: "member_sessions#create"

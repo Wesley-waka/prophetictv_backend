@@ -3,6 +3,11 @@ class MembersController < ApplicationController
     rescue_from ActiveRecord::RecordNotFound, with: :record_not_found
     skip_before_action :authorized, only: %i[create show]
 
+    def index
+        @member = Member.all
+        render json: @member,status: :ok
+    end
+
     def create
         # Default church_id to 1 if not provided
         # params[:church_id] ||= 1

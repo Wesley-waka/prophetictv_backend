@@ -1,0 +1,12 @@
+<h1>Videos</h1>
+
+<% @videos.each do |video| %>
+  <p>
+    <%= video.title %> -
+    <%= video_tag video.video_url, controls: true %>
+    <%= link_to 'Download', download_video_path(video), class: 'btn btn-primary' %>
+  </p>
+<% end %>
+
+<%= link_to 'Upload Video', new_video_path, class: 'btn btn-success' %>
+

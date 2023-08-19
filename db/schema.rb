@@ -24,12 +24,12 @@ ActiveRecord::Schema[7.0].define(version: 2023_08_12_195311) do
   end
 
   create_table "appointments", force: :cascade do |t|
-    t.string "first_name"
-    t.string "second_name"
+    t.string "fullname"
     t.string "email"
     t.integer "phone_number"
     t.boolean "reschedule"
     t.string "title"
+    t.integer "member_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
@@ -44,7 +44,6 @@ ActiveRecord::Schema[7.0].define(version: 2023_08_12_195311) do
   create_table "members", force: :cascade do |t|
     t.string "email"
     t.string "username"
-    # t.integer "church_id"
     t.string "password_digest"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -58,12 +57,12 @@ ActiveRecord::Schema[7.0].define(version: 2023_08_12_195311) do
     t.datetime "updated_at", null: false
   end
 
-  create_table "sermons", force: :cascade do |t|
+  create_table "videos", force: :cascade do |t|
     t.string "title"
     t.string "description"
     t.string "video"
     t.boolean "downloaded"
-    t.integer "admin_id"
+    t.string "speaker"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end

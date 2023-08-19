@@ -1,0 +1,15 @@
+<%= form_for @video, url: videos_path, multipart: true do |f| %>
+  <%= f.label :title %>
+  <%= f.text_field :title %>
+
+  <%= f.label :description%>
+  <%= f.text_field :description %>
+
+  <%= f.label :speker%>
+  <%= f.text_field :speaker %>
+
+  <%= f.label :video %>
+  <%= f.file_field :video %>
+
+  <%= f.submit 'Upload Video' %>
+<% end %>

@@ -48,7 +48,8 @@ gem "bootsnap", require: false
 
 gem 'jwt'
 
-gem "rack-cors"
+gem 'rack-cors', :require => 'rack/cors'
+
 
 gem 'active_model_serializers'
 

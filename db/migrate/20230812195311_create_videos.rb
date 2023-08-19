@@ -1,11 +1,11 @@
-class CreateSermons < ActiveRecord::Migration[7.0]
+class CreateVideos < ActiveRecord::Migration[7.0]
   def change
-    create_table :sermons do |t|
+    create_table :videos do |t|
       t.string :title
       t.string :description
       t.string :video # This line adds the 'video' attribute
       t.boolean :downloaded
-      t.integer :admin_id
+      t.string :speaker
 
       t.timestamps
     end

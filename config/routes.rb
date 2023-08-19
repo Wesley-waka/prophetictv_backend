@@ -1,7 +1,8 @@
 Rails.application.routes.draw do
   # resources :sermons
-  resources :appointments
-  resources :prayers
+  resources :appointments, only: [:index, :new, :create, :show]
+  resources :prayers, only: [:index, :new, :create, :show]
+
   # resources :admins
   # resources :members
   resources :churches
@@ -10,11 +11,16 @@ Rails.application.routes.draw do
   # post "/login", to: "sessions#create"
   # delete "/logout", to: "sessions#destroy"
   # get "/me", to: "users#show"
-  resources :sermons, only: [ :new, :create,:index] do
-    get 'download', on: :member # GET /videos GET /videos/:id/download GET /videos/new POST /videos 
+  resources :videos, only: [ :new, :create, :show] do
+    get 'download', on: :member
   end
   # root 'videos#index'
-  # get '/videos/all', to: 'videos#index'
+  get '/videos', to: 'videos#index'
+  get '/videos/:id', to: 'videos#show'
+  post '/prayers/create', to: 'prayers#create'
+  post '/appointments/create', to: 'appointments#create'
+
+
 
   post "/member/signup", to: "members#create"
   post "/member/login", to: "member_sessions#create"

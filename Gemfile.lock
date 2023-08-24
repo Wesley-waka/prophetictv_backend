@@ -53,6 +53,11 @@ GEM
       jsonapi-renderer (>= 0.1.1.beta1, < 0.3)
     active_storage_base64 (2.0.0)
       rails (>= 7.0)
+    active_storage_validations (1.0.4)
+      activejob (>= 5.2.0)
+      activemodel (>= 5.2.0)
+      activestorage (>= 5.2.0)
+      activesupport (>= 5.2.0)
     activejob (7.0.7)
       activesupport (= 7.0.7)
       globalid (>= 0.3.6)
@@ -242,6 +247,7 @@ PLATFORMS
 DEPENDENCIES
   active_model_serializers
   active_storage_base64
+  active_storage_validations
   bcrypt (~> 3.1.7)
   bootsnap
   capybara

@@ -12,7 +12,7 @@
   <%= f.file_field :video %>
 
   <%= f.label :image %>
-  <%= f.file_field :image%>
+  <%= f.file_field :image, accept: 'image/png, image/jpeg, image/jpg'%>
   
   <%= f.submit 'Upload Video' %>
 <% end %>

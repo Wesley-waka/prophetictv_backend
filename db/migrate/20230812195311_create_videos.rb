@@ -6,6 +6,7 @@ class CreateVideos < ActiveRecord::Migration[7.0]
       t.string :video # This line adds the 'video' attribute
       t.boolean :downloaded
       t.string :speaker
+      t.string :image
 
       t.timestamps
     end

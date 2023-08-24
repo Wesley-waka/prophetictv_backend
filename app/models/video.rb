@@ -1,4 +1,6 @@
 class Video < ApplicationRecord
-    mount_uploader :video, VideoUploader
+  include ActiveStorageBase64::Support::Base64Image
+  has_base64_image :image
+  mount_uploader :video, VideoUploader
   end
   

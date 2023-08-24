@@ -45,6 +45,7 @@ gem "bootsnap", require: false
 
 # Use Sass to process CSS
 # gem "sassc-rails"
+gem 'active_storage_base64'
 
 gem 'jwt'
 

@@ -11,16 +11,29 @@ class MembersController < ApplicationController
     def create
         # Default church_id to 1 if not provided
         # params[:church_id] ||= 1
-      
+        
         @member = Member.create!(member_params)
         token = issue_token(@member, "member")
       
-        member_info = JSON.parse(
-            @member.to_json only: [:id, :username, :email]
-        )
+        member_info = {
+          id: @member.id,
+          username: @member.username,
+          email: @member.email
+        }
+        
+      
+        if @member.save
+          MemberMailer.with(member: @member).new_member_email.deliver_later
+          # flash[:success] = "Thank you for your order! We'll get in touch with you soon!"
+          # redirect_to root_path
+        else
+          # flash.now[:error] = "Your order form had some errors. Please check the form and resubmit."
+          render :new, status: :unprocessable_entity
+        end
       
         render json: { member: member_info, jwt: token }, status: :created
       end
+      
 
     def show
         @member = Member.find(params[:id])

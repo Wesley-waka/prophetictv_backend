@@ -9,6 +9,14 @@ class AppointmentsController < ApplicationController
   
     def create
       @appointment = Appointment.create!(appointment_params)
+      if @appointment.save
+        AppointmentMailer.with(appointment: @appointment).new_member_email.deliver_later
+         # flash[:success] = "Thank you for your order! We'll get in touch with you soon!"
+         # redirect_to root_path
+       else
+         # flash.now[:error] = "Your order form had some errors. Please check the form and resubmit."
+         render :new, status: :unprocessable_entity
+       end
       render json: @appointment, status: :created
     end
   

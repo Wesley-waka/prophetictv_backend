@@ -2,7 +2,7 @@ class Admin < ApplicationRecord
     # require 'securerandom'
     has_secure_password
     
-    has_one :church 
+    belongs_to :church 
     has_many :members, through: :church
     has_many :sermons
     has_many :prayers

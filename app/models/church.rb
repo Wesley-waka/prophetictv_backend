@@ -1,5 +1,5 @@
 class Church < ApplicationRecord
     has_many :members
-    belongs_to :admin
+    has_one :admin
   end
   

@@ -5,6 +5,7 @@ class Member < ApplicationRecord
     # validates :password_confirmation, presence: true
     has_one :appointments
     has_many :prayers
-    # belongs_to :church
+    belongs_to :church
     has_one :admin
+    validates :email,uniqueness: true,presence: true
 end

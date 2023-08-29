@@ -4,13 +4,22 @@ class AdminsController < ApplicationController
     skip_before_action :authorized, only: %i[create show]
 
     def create
-        admin = Admin.create!(admin_params)
+        @admin = Admin.create!(admin_params)
         token = issue_token(admin, "admin")
 
         admin_info = JSON.parse(
-            admin.to_json only: [:id, :username, :email]
+            @admin.to_json only: [:id, :username, :email]
         )
 
+        if @admin.save
+           AdminMailer.with(admin: @admin).new_member_email.deliver_later
+            # flash[:success] = "Thank you for your order! We'll get in touch with you soon!"
+            # redirect_to root_path
+          else
+            # flash.now[:error] = "Your order form had some errors. Please check the form and resubmit."
+            render :new, status: :unprocessable_entity
+          end
+        
         render json: {admin: admin_info, jwt: token }, status: :created
     end
 

@@ -1,5 +1,5 @@
 class PrayersController < ApplicationController
-    skip_before_action :authorized, only: %i[index]
+    skip_before_action :authorized, only: %i[index create]
 
     def index
         @prayers = Prayer.all

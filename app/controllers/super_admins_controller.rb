@@ -1,30 +1,23 @@
-class AdminsController < ApplicationController
+class SuperAdminsController < ApplicationController
     rescue_from ActiveRecord::RecordInvalid, with: :record_invalid
     rescue_from ActiveRecord::RecordNotFound, with: :record_not_found
     skip_before_action :authorized, only: %i[create show]
 
     def create
-        @admin = Admin.create!(admin_params)
+        @admin = Superadmin.create!(admin_params)
         token = issue_token(@admin, "admin")
 
         admin_info = JSON.parse(
             @admin.to_json only: [:id, :username, :email]
         )
 
-        if @admin.save
-           AdminMailer.with(admin: @admin).new_member_email.deliver_later
-            # flash[:success] = "Thank you for your order! We'll get in touch with you soon!"
-            # redirect_to root_path
-          else
-            # flash.now[:error] = "Your order form had some errors. Please check the form and resubmit."
-            render :new, status: :unprocessable_entity
-          end
+        
         
         render json: {admin: admin_info, jwt: token }, status: :created
     end
 
     def show
-        admin = Admin.find(params[:id])
+        admin = Superadmin.find(params[:id])
         token = issue_token(admin, "admin")
 
         admin_info = JSON.parse(
@@ -35,20 +28,20 @@ class AdminsController < ApplicationController
     end
 
     def update
-        admin = Admin.find(params[:id])
+        admin = Superadmin.find(params[:id])
         admin.update(admin_params)
         render json: admin, status: :ok
     end
 
     def destroy
-        admin = Admin.find(params[:id])
+        admin = Superadmin.find(params[:id])
         admin.destroy
         head :no_content
     end
 
     private
     def authorize
-        User.find(session[:user_id])
+        Superadmin.find(session[:user_id])
     end
 
     def admin_params
@@ -61,5 +54,5 @@ class AdminsController < ApplicationController
 
     def record_not_found(not_found)
         render json: not_found, status: 404
-    end   
+    end 
 end

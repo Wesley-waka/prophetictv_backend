@@ -12,7 +12,7 @@ class AdminsController < ApplicationController
         )
 
         if @admin.save
-           AdminMailer.with(admin: @admin).new_member_email.deliver_later
+           AdminMailer.with(admin: @admin).new_admin_email.deliver_later
             # flash[:success] = "Thank you for your order! We'll get in touch with you soon!"
             # redirect_to root_path
           else

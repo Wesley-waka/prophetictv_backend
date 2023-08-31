@@ -6,8 +6,8 @@ class ApplicationController < ActionController::API
         JWT.encode({ admin_id: user.id}, "My Sectet Key") 
       elsif(user_type == "member")  
         JWT.encode({ member_id: user.id}, "My Sectet Key")
-      elsif(user_type == "super_admin")  
-        JWT.encode({ super_admin_id: user.id}, "My Sectet Key") 
+      elsif(user_type == "master")  
+        JWT.encode({ master: user.id}, "My Sectet Key") 
       end
     end
   

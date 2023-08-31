@@ -1,37 +1,32 @@
-class MembersController < ApplicationController
+class MastersController < ApplicationController
     rescue_from ActiveRecord::RecordInvalid, with: :record_invalid
     rescue_from ActiveRecord::RecordNotFound, with: :record_not_found
     skip_before_action :authorized, only: %i[create show]
 
     def index
-        @member = Member.all
+        @member = Master.all
         render json: @member,status: :ok
     end
 
     def create
         # Default church_id to 1 if not provided
         # params[:church_id] ||= 1
-        
-        @member = Member.create!(member_params)
-        token = issue_token(@member, "member")
+        # @admin = Admin.create!(admin_params)
+        # token = issue_token(@admin, "admin")
+
+        # admin_info = JSON.parse(
+        #     @admin.to_json only: [:id, :username, :email]
+        # )
+        @member = Master.create!(member_params)
+        token = issue_token(@member, "master")
       
         member_info = {
           id: @member.id,
-          username: @member.username,
+          name: @member.name,
           email: @member.email
         }
         
-      
-        if @member.save
-          MemberMailer.with(member: @member).new_member_email.deliver_later
-          # flash[:success] = "Thank you for your order! We'll get in touch with you soon!"
-          # redirect_to root_path
-        else
-          # flash.now[:error] = "Your order form had some errors. Please check the form and resubmit."
-          render :new, status: :unprocessable_entity
-        end
-      
-        render json: { member: member_info, jwt: token }, status: :created
+        render json: { admin: member_info, jwt: token }, status: :created
       end
       
 
@@ -64,7 +59,7 @@ class MembersController < ApplicationController
     end
 
     def member_params
-        params.permit(:username, :email,:password)
+        params.permit(:name, :email,:password)
     end
 
     def record_invalid(invalid)
@@ -73,5 +68,5 @@ class MembersController < ApplicationController
 
     def record_not_found(not_found)
         render json: not_found, status: 404
-    end   
+    end  
 end

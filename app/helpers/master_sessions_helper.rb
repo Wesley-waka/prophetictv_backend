@@ -1,0 +1,2 @@
+module MasterSessionsHelper
+end

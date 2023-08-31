@@ -1,19 +1,19 @@
-class SuperAdminSessionsController < ApplicationController
+class MasterSessionsController < ApplicationController
     rescue_from ActiveRecord::RecordInvalid, with: :record_invalid
     rescue_from ActiveRecord::RecordNotFound, with: :record_not_found
     rescue_from NoMethodError, with: :couldnt_log_you_in
     skip_before_action :authorized, only: %i[create]
 
     def create
-        admin = Superadmin.find_by!(username: params[:username])
-        admin = admin.authenticate(params[:password])
-        token = issue_token(admin, "master")
+        @member = Master.find_by!(name: params[:name])
+        @member = @member.authenticate(params[:password])
+        token = issue_token(@member, "member")
 
-        admin_info = JSON.parse(
-            admin.to_json only: [:id, :username, :email]
+        member_info = JSON.parse(
+            @member.to_json only: [:id, :name, :email]
         )
 
-        render json: {admin: admin_info, jwt: token }, status: :created
+        render json: {admin: member_info, jwt: token }, status: :created
     end
 
     def destroy
@@ -31,5 +31,5 @@ class SuperAdminSessionsController < ApplicationController
 
     def record_not_found(not_found)
         render json: not_found, status: 404
-    end
+    end 
 end

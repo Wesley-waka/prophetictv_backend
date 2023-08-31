@@ -1,5 +1,5 @@
 class AppointmentsController < ApplicationController
-    before_action :set_appointment, only: [:show]
+    before_action :set_appointment, only: [:show,:destroy]
     skip_before_action :authorized, only: [:index, :create]
   
     def index
@@ -10,7 +10,7 @@ class AppointmentsController < ApplicationController
     def create
       @appointment = Appointment.create!(appointment_params)
       if @appointment.save
-        AppointmentMailer.with(appointment: @appointment).new_member_email.deliver_later
+        AppointmentMailer.with(appointment: @appointment).new_appointment_email.deliver_later
          # flash[:success] = "Thank you for your order! We'll get in touch with you soon!"
          # redirect_to root_path
        else
@@ -39,7 +39,7 @@ class AppointmentsController < ApplicationController
     end
   
     def appointment_params
-      params.permit(:first_name, :second_name, :email, :phone_number, :reschedule, :title)
+      params.permit(:fullname, :email, :phone_number, :reschedule, :title)
     end
   end
   

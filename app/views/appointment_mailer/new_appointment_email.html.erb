@@ -5,21 +5,16 @@
     <meta content='text/html; charset=UTF-8' http-equiv='Content-Type' />
   </head>
   <body>
-    <p>You got a new appointment from <%= @appoinment.name %>!</p>
+    <p>You got a new appointment from <%= @appointment.fullname %>!</p>
     <p>
     Appointment details<br>
     --------------------------
     </p>
     <p>Name: <%= @appointment.fullname %></p>
     <p>Email: <%= @appointment.email %></p>
-    <p>Address: <%= @appointment.phone_number %></p>
+    <p>PhoneNumber: <%= @appointment.phone_number %></p>
     <p>Comfortability to reschedule: <%= @appointment.reschedule %></p>
     <p>Appointment reason: <%= @appointment.title %></p>
 
-    <p>
-    Message:<br>
-    ----------
-    </p>
-    <p><%= @order.message %></p>
   </body>
 </html>

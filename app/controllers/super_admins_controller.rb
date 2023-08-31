@@ -4,8 +4,8 @@ class SuperAdminsController < ApplicationController
     skip_before_action :authorized, only: %i[create show]
 
     def create
-        @admin = Superadmin.create!(admin_params)
-        token = issue_token(@admin, "admin")
+        @admin = SuperAdmin.create!(admin_params)
+        token = issue_token(@admin, "master")
 
         admin_info = JSON.parse(
             @admin.to_json only: [:id, :username, :email]
@@ -17,7 +17,7 @@ class SuperAdminsController < ApplicationController
     end
 
     def show
-        admin = Superadmin.find(params[:id])
+        admin = SuperAdmin.find(params[:id])
         token = issue_token(admin, "admin")
 
         admin_info = JSON.parse(
@@ -28,24 +28,24 @@ class SuperAdminsController < ApplicationController
     end
 
     def update
-        admin = Superadmin.find(params[:id])
+        admin = SuperAdmin.find(params[:id])
         admin.update(admin_params)
         render json: admin, status: :ok
     end
 
     def destroy
-        admin = Superadmin.find(params[:id])
+        admin = SuperAdmin.find(params[:id])
         admin.destroy
         head :no_content
     end
 
     private
     def authorize
-        Superadmin.find(session[:user_id])
+        SuperAdmin.find(session[:user_id])
     end
 
     def admin_params
-        params.permit(:username, :email,:church_id,:password)
+        params.permit(:username, :email,:password)
     end
 
     def record_invalid(invalid)

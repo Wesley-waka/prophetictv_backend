@@ -20,6 +20,7 @@ Rails.application.routes.draw do
   post '/prayers/create', to: 'prayers#create'
   post '/appointments/create', to: 'appointments#create'
 
+  post '/church/create', to: 'churches#create'
   post "/superadmin/login", to: "master_sessions#create"
   post "/superadmin/signup", to: "masters#create"
 

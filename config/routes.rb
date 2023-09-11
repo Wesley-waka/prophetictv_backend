@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  resources :houses
   # resources :sermons
   resources :appointments, only: [:index, :new, :create, :show]
   resources :prayers, only: [:index, :new, :create, :show]
@@ -19,12 +20,17 @@ Rails.application.routes.draw do
   get '/videos/:id', to: 'videos#show'
   post '/prayers/create', to: 'prayers#create'
   post '/appointments/create', to: 'appointments#create'
+  post '/video/create', to: 'videos#create'
 
-  post '/church/create', to: 'churches#create'
+  post '/church/create', to: 'ministry#create'
+  get '/church/all', to: 'ministry#index'
+  get '/church/:id', to: 'ministry#show'
+
   post "/superadmin/login", to: "master_sessions#create"
   post "/superadmin/signup", to: "masters#create"
+  post "/downloads/create", to: "video_downloads#create"
 
-
+  
   post "/member/signup", to: "members#create"
   post "/member/login", to: "member_sessions#create"
   delete "/member/logout", to: "member_sessions#destroy"

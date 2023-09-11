@@ -1,0 +1,8 @@
+class Videodownload < ApplicationRecord
+    # include ActiveStorageBase64::Support::Base64Image
+    # has_base64_image :image
+    # mount_uploader :video, VideoUploader
+    mount_uploader :image, ImageUploader
+    
+end
+    

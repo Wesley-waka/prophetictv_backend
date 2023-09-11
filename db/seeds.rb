@@ -5,6 +5,6 @@
 #
 #   movies = Movie.create([{ name: "Star Wars" }, { name: "Lord of the Rings" }])
 #   Character.create(name: "Luke", movie: movies.first)
-Admin.create([{username:'Wes',email:'wes@gmail.com',password:'Wesleywaka2.',church_id: 1}])
+# Admin.create([{username:'Wes',email:'wes@gmail.com',password:'Wesleywaka2.',church_id: 1}])
 
-Church.create([{name:'Anglican Church',postalAddress: 'Nairobi'}])
+# Church.create([{name:'Anglican Church',postalAddress: 'Nairobi'}])

@@ -11,9 +11,9 @@ class VideosController < ApplicationController
   end
 
   def create
-    @video = Video.new(video_params)
-    if @video.save
-      redirect_to videos_path, notice: 'Video uploaded successfully.'
+    @video = Video.create!(video_params)
+    if @video
+      render json: @video,status: :ok
     else
       render :new
     end
@@ -32,6 +32,6 @@ class VideosController < ApplicationController
   private
 
   def video_params
-    params.require(:video).permit(:title, :video,:description,:speaker,:image)
+    params.permit(:title, :video,:description,:speaker,:image)
   end
 end

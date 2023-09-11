@@ -52,7 +52,7 @@ class AdminsController < ApplicationController
     end
 
     def admin_params
-        params.permit(:username, :email,:church_id,:password)
+        params.permit(:username, :email,:ministry_id,:password)
     end
 
     def record_invalid(invalid)

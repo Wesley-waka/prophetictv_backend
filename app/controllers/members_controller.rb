@@ -64,7 +64,7 @@ class MembersController < ApplicationController
     end
 
     def member_params
-        params.permit(:username, :email,:password)
+        params.permit(:username, :email,:password,:ministry_id)
     end
 
     def record_invalid(invalid)

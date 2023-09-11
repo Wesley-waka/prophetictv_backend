@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_08_30_233120) do
+ActiveRecord::Schema[7.0].define(version: 2023_09_01_132015) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -45,7 +45,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_08_30_233120) do
   create_table "admins", force: :cascade do |t|
     t.string "email"
     t.string "username"
-    t.integer "church_id"
+    t.integer "ministry_id"
     t.string "password_digest"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -62,8 +62,15 @@ ActiveRecord::Schema[7.0].define(version: 2023_08_30_233120) do
   end
 
   create_table "churches", force: :cascade do |t|
-    t.string "name"
+    t.string "churchname"
     t.string "postalAddress"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "houses", force: :cascade do |t|
+    t.string "housename"
+    t.string "houselocation"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
@@ -79,7 +86,15 @@ ActiveRecord::Schema[7.0].define(version: 2023_08_30_233120) do
   create_table "members", force: :cascade do |t|
     t.string "email"
     t.string "username"
+    t.integer "ministry_id"
     t.string "password_digest"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "ministries", force: :cascade do |t|
+    t.string "ministryname"
+    t.string "ministrylocation"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
@@ -95,7 +110,17 @@ ActiveRecord::Schema[7.0].define(version: 2023_08_30_233120) do
   create_table "superadmins", force: :cascade do |t|
     t.string "username"
     t.string "email"
-    t.string "password"
+    t.string "password_digest"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "videodownloads", force: :cascade do |t|
+    t.string "title"
+    t.string "description"
+    t.boolean "downloaded"
+    t.string "speaker"
+    t.string "image"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end

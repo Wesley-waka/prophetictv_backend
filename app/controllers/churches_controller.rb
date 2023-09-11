@@ -1,5 +1,5 @@
 class ChurchesController < ApplicationController
-    
+    skip_before_action :authorized, only: [:index, :create]
     def index
         @church = Church.all
         render json: @church, include: [:admin, :members], status: :ok
